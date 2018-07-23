@@ -20,7 +20,11 @@ if ((docker-machine status $Machine) -ne 'Running') {
 }
 
 # Install required package (make)
-Invoke-SshCommand 'tce-load -wi make'
+Invoke-SshCommand @"
+export http_proxy=$env:http_proxy
+export https_proxy=$env:https_proxy
+tce-load -wi make
+"@
 
 # Clear working directory
 Invoke-SshCommand @"
@@ -33,6 +37,8 @@ Invoke-SshCommand @"
 cd $WorkDir
 
 # Sparse checkout
+git config --global http.proxy $env:http_proxy
+git config --global https.proxy $env:https_proxy
 git init
 git config core.sparsecheckout true
 git remote add origin https://github.com/docker/docker-ce.git
