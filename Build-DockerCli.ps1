@@ -56,11 +56,7 @@ fi
 Invoke-SshCommand @"
 cd $WorkDir/components/cli
 cat VERSION
-# Try binary-windows, a new target since v17.10.0 https://github.com/docker/cli/pull/531
 make -f docker.Makefile binary-windows
-if [[ $? != 0 ]]; then
-	make -f docker.Makefile cross
-fi
 "@
 
 # Copy binary
