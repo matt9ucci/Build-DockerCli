@@ -60,4 +60,5 @@ make -f docker.Makefile binary-windows
 "@
 
 # Copy binary
-Invoke-SshCommand "cp $WorkDir/components/cli/build/docker-windows-amd64 $OutputDir/docker.exe"
+Write-Host "user = docker; password = tcuser"
+docker-machine scp default:~/Build-DockerCli/components/cli/build/docker-windows-amd64 .
